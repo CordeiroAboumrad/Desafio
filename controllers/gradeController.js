@@ -67,9 +67,7 @@ const update = async (req, res) => {
   try {
 
     if (!req.body) {
-      
         throw 'Dados para atualização vazios';
-
     }
 
     const student = await studentModel.findOneAndUpdate({'_id': id},
