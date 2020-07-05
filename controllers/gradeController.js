@@ -4,7 +4,11 @@ import { db, studentModel } from '../models/index.js';
 
 const create = async (req, res) => {
   try {
-    res.send();
+
+    const student = new studentModel(req.body);
+    await student.save();
+
+    res.status(200).send(student);
     // logger.info(`POST /grade - ${JSON.stringify()}`);
   } catch (error) {
     res
@@ -20,12 +24,16 @@ const findAll = async (req, res) => {
 
   //condicao para o filtro no findAll
   var condition = name
-    ? { name: { $regex: new RegExp(name), $options: 'i' } }
-    : {};
-
+  ? { name: { $regex: new RegExp(name), $options: 'i' } }
+  : {};
+  
+  
   try {
-    res.send();
-    logger.info(`GET /grade`);
+
+    const student = await studentModel.find({});
+    res.status(200).send(student);
+
+    // logger.info(`GET /grade`);
   } catch (error) {
     res
       .status(500)
@@ -39,9 +47,12 @@ const findOne = async (req, res) => {
   const id = req.params.id;
 
   try {
-    res.send();
 
-    logger.info(`GET /grade - ${id}`);
+    const student = await studentModel.find({"_id": id});
+
+    res.status(200).send(student);
+
+    // logger.info(`GET /grade - ${id}`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
     // logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
@@ -50,18 +61,25 @@ const findOne = async (req, res) => {
 
 
 const update = async (req, res) => {
-  if (!req.body) {
-    return res.status(400).send({
-      message: 'Dados para atualizacao vazio',
-    });
-  }
-
+  
   const id = req.params.id;
-
+  
   try {
-    res.send({ message: 'Grade atualizado com sucesso' });
 
-    logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
+    if (!req.body) {
+      
+        throw 'Dados para atualização vazios';
+
+    }
+
+    const student = await studentModel.findOneAndUpdate({'_id': id},
+        req.body,
+        {new: true}
+        );
+
+    res.status(200).send(student);
+
+    // logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
   } catch (error) {
     res.status(500).send({ message: 'Erro ao atualizar a Grade id: ' + id });
     // logger.error(`PUT /grade - ${JSON.stringify(error.message)}`);
