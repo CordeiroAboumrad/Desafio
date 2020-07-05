@@ -44,7 +44,7 @@ const findAll = async (req, res) => {
 
 
 const findOne = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.id; //
 
   try {
 
