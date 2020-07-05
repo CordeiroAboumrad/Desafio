@@ -114,7 +114,7 @@ const removeAll = async (req, res) => {
 
     const student = await studentModel.deleteMany({});
 
-    res.send({
+    res.status(200).send({
       message: `Grades excluidos`,
     });
     // logger.info(`DELETE /grade`);
