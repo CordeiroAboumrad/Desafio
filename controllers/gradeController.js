@@ -109,4 +109,3 @@ const removeAll = async (req, res) => {
 };
 
 export default { create, findAll, findOne, update, remove, removeAll };
-// Teste
