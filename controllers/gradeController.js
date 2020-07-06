@@ -44,18 +44,18 @@ const findAll = async (req, res) => {
 
 
 const findOne = async (req, res) => {
-  // const name = req.params.name; 
-  const id = req.params.id;
+  const name = req.params.name; 
+  // const id = req.params.id;
 
   try {
 
-    const student = await studentModel.find({"_id": id});
+    const student = await studentModel.find({"name": name});
 
     res.status(200).send(student);
 
     // logger.info(`GET /grade - ${id}`);
   } catch (error) {
-    res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
+    res.status(500).send({ message: 'Erro ao buscar o Grade name: ' + name });
     // logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
   }
 };
